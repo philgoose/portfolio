@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>임채훈 | AI 교육 · 바이브코딩 전문가 | 좋은기분</title>
+  <meta name="description" content="생성형 AI를 실무에 바로 쓰는 결과물로 바꿔드립니다. AI 바이브코딩, 생성형 AI 교육, 기업 맞춤 출강 전문가 임채훈 포트폴리오" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #0f172a;
+      --accent: #3b82f6;
+      --accent2: #8b5cf6;
+      --bg: #f8fafc;
+      --card: #ffffff;
+      --text: #1e293b;
+      --muted: #64748b;
+      --border: #e2e8f0;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Noto Sans KR', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+    }
+    .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+    
+    /* Header */
+    header {
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #312e81 100%);
+      color: white;
+      padding: 80px 0 60px;
+      position: relative;
+      overflow: hidden;
+    }
+    header::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -20%;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(59,130,246,0.25) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+    .hero { position: relative; z-index: 1; }
+    .badge-row { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; }
+    .badge {
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.2);
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 500;
+    }
+    h1 { font-size: 2.8rem; font-weight: 900; margin-bottom: 8px; letter-spacing: -0.5px; }
+    .subtitle { font-size: 1.25rem; opacity: 0.9; margin-bottom: 16px; }
+    .tagline {
+      font-size: 1.1rem;
+      background: rgba(255,255,255,0.1);
+      display: inline-block;
+      padding: 10px 20px;
+      border-radius: 12px;
+      margin-bottom: 28px;
+    }
+    .cta-row { display: flex; flex-wrap: wrap; gap: 12px; }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 24px;
+      border-radius: 10px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+    .btn-primary { background: var(--accent); color: white; }
+    .btn-primary:hover { background: #2563eb; transform: translateY(-2px); }
+    .btn-outline { background: transparent; color: white; border: 1.5px solid rgba(255,255,255,0.4); }
+    .btn-outline:hover { background: rgba(255,255,255,0.1); }
+
+    /* Sections */
+    section { padding: 70px 0; }
+    .section-title {
+      font-size: 1.8rem;
+      font-weight: 800;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .section-desc { color: var(--muted); margin-bottom: 36px; max-width: 600px; }
+
+    /* About */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      align-items: start;
+    }
+    @media (max-width: 768px) { .about-grid { grid-template-columns: 1fr; } }
+    .about-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 28px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+    }
+    .stat-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-top: 24px;
+    }
+    .stat {
+      text-align: center;
+      padding: 16px;
+      background: #f1f5f9;
+      border-radius: 12px;
+    }
+    .stat-num { font-size: 1.6rem; font-weight: 800; color: var(--accent); }
+    .stat-label { font-size: 0.85rem; color: var(--muted); }
+
+    /* Services */
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+    }
+    .service-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 24px;
+      transition: all 0.25s;
+    }
+    .service-card:hover {
+      border-color: var(--accent);
+      box-shadow: 0 8px 30px rgba(59,130,246,0.12);
+      transform: translateY(-4px);
+    }
+    .service-icon { font-size: 2rem; margin-bottom: 12px; }
+    .service-card h3 { font-size: 1.15rem; margin-bottom: 8px; }
+    .service-card p { color: var(--muted); font-size: 0.95rem; }
+    .service-time {
+      margin-top: 12px;
+      font-size: 0.85rem;
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    /* Projects */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px;
+    }
+    .project-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      overflow: hidden;
+      transition: all 0.25s;
+    }
+    .project-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 30px rgba(0,0,0,0.08);
+    }
+    .project-body { padding: 20px; }
+    .project-body h3 { font-size: 1.05rem; margin-bottom: 6px; }
+    .project-body p { color: var(--muted); font-size: 0.9rem; margin-bottom: 14px; }
+    .project-link {
+      color: var(--accent);
+      font-weight: 600;
+      text-decoration: none;
+      font-size: 0.9rem;
+    }
+    .project-link:hover { text-decoration: underline; }
+
+    /* Lectures */
+    .timeline { border-left: 3px solid var(--accent); padding-left: 24px; }
+    .timeline-item { margin-bottom: 20px; position: relative; }
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: -31px;
+      top: 6px;
+      width: 12px;
+      height: 12px;
+      background: var(--accent);
+      border-radius: 50%;
+      border: 3px solid white;
+      box-shadow: 0 0 0 2px var(--accent);
+    }
+    .year { font-weight: 700; color: var(--accent); margin-bottom: 4px; }
+    .lecture-list { color: var(--muted); font-size: 0.95rem; }
+
+    /* Contact */
+    .contact-box {
+      background: linear-gradient(135deg, #0f172a, #1e293b);
+      color: white;
+      border-radius: 20px;
+      padding: 48px;
+      text-align: center;
+    }
+    .contact-box h2 { margin-bottom: 12px; }
+    .contact-box p { opacity: 0.85; margin-bottom: 28px; }
+    .contact-links { display: flex; justify-content: center; flex-wrap: wrap; gap: 16px; }
+
+    footer {
+      text-align: center;
+      padding: 40px 0;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container hero">
+      <div class="badge-row">
+        <span class="badge">사업자등록 보유</span>
+        <span class="badge">공공·기업·대학 출강</span>
+        <span class="badge">저서 7권</span>
+        <span class="badge">행정사 · 정보처리기능사</span>
+      </div>
+      <h1>임채훈</h1>
+      <p class="subtitle">CheaHun Lim · CEO, 좋은기분(Feelsogood^^)</p>
+      <p class="tagline">생성형 AI를 "실무에 바로 쓰는 결과물"로 바꿔드립니다.</p>
+      <div class="cta-row">
+        <a href="mailto:imchaehun7@gmail.com" class="btn btn-primary">이메일 문의</a>
+        <a href="https://feelsogood.shop" target="_blank" class="btn btn-outline">공식 사이트</a>
+        <a href="https://github.com/philgoose" target="_blank" class="btn btn-outline">GitHub</a>
+      </div>
+    </div>
+  </header>
+
+  <section>
+    <div class="container">
+      <h2 class="section-title">👋 About</h2>
+      <p class="section-desc">2023년 경영컨설팅업으로 사업자등록 후, 공공기관·기업·대학에서 생성형 AI 활용과 바이브코딩을 중심으로 강의·개발·컨설팅을 수행해 왔습니다.</p>
+      <div class="about-grid">
+        <div class="about-card">
+          <p>단순 도구 소개가 아니라, <strong>수강생이 강의 시간 안에 본인 업무용 결과물(앱·자동화·문서)을 직접 완성</strong>하도록 설계하는 것이 강점입니다.</p>
+          <div class="stat-grid">
+            <div class="stat"><div class="stat-num">7+</div><div class="stat-label">저서</div></div>
+            <div class="stat"><div class="stat-num">30+</div><div class="stat-label">출강 기관</div></div>
+            <div class="stat"><div class="stat-num">50+</div><div class="stat-label">HTML 앱</div></div>
+            <div class="stat"><div class="stat-num">2023~</div><div class="stat-label">활동 기간</div></div>
+          </div>
+        </div>
+        <div class="about-card">
+          <h3 style="margin-bottom:12px;">주요 자격 · 경력</h3>
+          <ul style="color:var(--muted); padding-left:18px;">
+            <li>행정사 · 정보처리기능사</li>
+            <li>예비역 소령 (정보·작전·교육 장교)</li>
+            <li>대전대학교 졸업 (군사학·러시아어)</li>
+            <li>파이썬 프로젝트 대회 우승</li>
+            <li>빅데이터 All-in-One 프로젝트 2위</li>
+            <li>태권도 6단 (국기원)</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section style="background:#fff;">
+    <div class="container">
+      <h2 class="section-title">🛠️ 제공 서비스</h2>
+      <p class="section-desc">기업·공공·대학 맞춤형 교육과 개발을 제공합니다. 견적은 시간·인원·난이도에 따라 산정됩니다 (VAT 포함).</p>
+      <div class="services-grid">
+        <div class="service-card">
+          <div class="service-icon">💻</div>
+          <h3>AI 바이브코딩</h3>
+          <p>Cursor·Claude 기반 No/Low-code. 비개발자도 앱·웹앱을 직접 만드는 부트캠프.</p>
+          <div class="service-time">기본 5일 / 35h</div>
+        </div>
+        <div class="service-card">
+          <div class="service-icon">🤖</div>
+          <h3>생성형 AI 업무 활용</h3>
+          <p>보고서·기획·자동화 등 직무별 업무를 즉시 적용하는 실습형 강의.</p>
+          <div class="service-time">3일 / 21h</div>
+        </div>
+        <div class="service-card">
+          <div class="service-icon">📊</div>
+          <h3>Excel · Power BI</h3>
+          <p>데이터 정리·시각화·대시보드. AI를 결합한 실무 데이터 분석 교육.</p>
+          <div class="service-time">2일 / 14h</div>
+        </div>
+        <div class="service-card">
+          <div class="service-icon">🏢</div>
+          <h3>기업 맞춤 출강</h3>
+          <p>법정의무교육·직무교육·AI 인프라 도입 교육. 시간·인원·커리큘럼 전면 협의.</p>
+          <div class="service-time">맞춤형</div>
+        </div>
+        <div class="service-card">
+          <div class="service-icon">📱</div>
+          <h3>앱 · 웹앱 개발</h3>
+          <p>AI 활용 트랙으로 사내 도구·웹앱·자동화를 빠르게 설계·납품.</p>
+          <div class="service-time">프로젝트</div>
+        </div>
+        <div class="service-card">
+          <div class="service-icon">📝</div>
+          <h3>제안서 · POD 출판</h3>
+          <p>사업 제안서 작성 및 교보문고 POD 도서 기획·출간 컨설팅.</p>
+          <div class="service-time">컨설팅</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <h2 class="section-title">🚀 주요 프로젝트 (직접 만든 HTML 앱)</h2>
+      <p class="section-desc">바이브코딩과 AI로 직접 제작한 다양한 웹앱·도구들입니다. GitHub에서 바로 확인할 수 있습니다.</p>
+      <div class="projects-grid">
+        <div class="project-card">
+          <div class="project-body">
+            <h3>🔮 Luna Tarot PWA</h3>
+            <p>타로 카드 Progressive Web App. 모바일에서도 설치 가능한 앱.</p>
+            <a class="project-link" href="https://github.com/philgoose/luna-tarot-pwa" target="_blank">GitHub 보기 →</a>
+          </div>
+        </div>
+        <div class="project-card">
+          <div class="project-body">
+            <h3>🛡️ SafeKorea</h3>
+            <p>안전 관련 정보와 기능을 담은 웹 애플리케이션.</p>
+            <a class="project-link" href="https://github.com/philgoose/safekorea" target="_blank">GitHub 보기 →</a>
+          </div>
+        </div>
+        <div class="project-card">
+          <div class="project-body">
+            <h3>🌍 Global Care OS</h3>
+            <p>글로벌 케어를 위한 운영 시스템 웹앱.</p>
+            <a class="project-link" href="https://github.com/philgoose/Global-Care-OS" target="_blank">GitHub 보기 →</a>
+          </div>
+        </div>
+        <div class="project-card">
+          <div class="project-body">
+            <h3>🎈 Balloon Game</h3>
+            <p>어린이를 위한 재미있는 풍선 게임.</p>
+            <a class="project-link" href="https://github.com/philgoose/balloon" target="_blank">GitHub 보기 →</a>
+          </div>
+        </div>
+        <div class="project-card">
+          <div class="project-body">
+            <h3>📄 Professional Doc Generator</h3>
+            <p>문서 작성을 도와주는 전문 도구.</p>
+            <a class="project-link" href="https://github.com/philgoose/professional-doc-generator" target="_blank">GitHub 보기 →</a>
+          </div>
+        </div>
+        <div class="project-card">
+          <div class="project-body">
+            <h3>🎓 Classic Web Lesson</h3>
+            <p>바이브코딩 웹 수업 자료 (지선님 1:1 레슨 포함).</p>
+            <a class="project-link" href="https://github.com/philgoose/classic-web-lesson-01-jiseon" target="_blank">GitHub 보기 →</a>
+          </div>
+        </div>
+        <div class="project-card">
+          <div class="project-body">
+            <h3>🧮 계산기 시리즈</h3>
+            <p>다양한 버전의 계산기 앱 (바이브코딩 실습 결과물).</p>
+            <a class="project-link" href="https://github.com/philgoose/-777777777" target="_blank">예시 보기 →</a>
+          </div>
+        </div>
+        <div class="project-card">
+          <div class="project-body">
+            <h3>📝 Dia · Kiosk · OTT</h3>
+            <p>문서작성, 키오스크, OTT 관련 웹앱 모음.</p>
+            <a class="project-link" href="https://github.com/philgoose" target="_blank">전체 저장소 →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section style="background:#fff;">
+    <div class="container">
+      <h2 class="section-title">🎤 주요 출강 이력</h2>
+      <p class="section-desc">2023년부터 공공기관·대기업·대학에서 AI와 바이브코딩 교육을 진행해 왔습니다.</p>
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="year">2026</div>
+          <div class="lecture-list">한화투자증권 AI VIBE 코딩 부트캠프 / 평가위원 · 케이피항공산업 Excel 심화(AI) · 국립강릉원주대 중장년층 AI 교육</div>
+        </div>
+        <div class="timeline-item">
+          <div class="year">2025</div>
+          <div class="lecture-list">한국환경공단 · 해양경찰청 · 고용노동부 · 도로교통공사 · 인천상의 · 한국무용협회·DDP · 기술사관 교원양성 등</div>
+        </div>
+        <div class="timeline-item">
+          <div class="year">2024</div>
+          <div class="lecture-list">생성형 AI 인턴교육 · 강릉관동대 · 경기과학기술대 · 강릉영동대</div>
+        </div>
+        <div class="timeline-item">
+          <div class="year">2023</div>
+          <div class="lecture-list">부산소상공인진흥센터 브랜드 컨설팅</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <div class="contact-box">
+        <h2>함께 만들어볼까요?</h2>
+        <p>임직원 AI 교육, 바이브코딩 부트캠프, 사내 앱 개발, 제안서·출판까지<br>실무에 바로 쓰는 결과물을 함께 완성해 드립니다.</p>
+        <div class="contact-links">
+          <a href="mailto:imchaehun7@gmail.com" class="btn btn-primary">imchaehun7@gmail.com</a>
+          <a href="https://feelsogood.shop" target="_blank" class="btn btn-outline">feelsogood.shop</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      Brand © 좋은기분(Feelsogood^^) · CheaHun Lim · 2023–2026
+    </div>
+  </footer>
+</body>
+</html>

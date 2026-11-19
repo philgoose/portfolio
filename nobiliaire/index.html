@@ -140,6 +140,57 @@ footer{padding:22px 0 40px;font-size:11.5px;color:var(--ink3);text-align:center;
   .hdmeta{text-align:left}
   .fcta{padding:24px 20px}
 }
+
+/* ===== PDF / print document ===== */
+.pdfbtn{margin-top:14px;width:100%;font:inherit;font-size:13.5px;font-weight:700;color:#fff;
+  background:var(--navy);border:none;border-radius:10px;padding:12px;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;gap:8px;transition:opacity .15s}
+.pdfbtn:hover{opacity:.9}
+.pdfbtn:disabled{opacity:.4;cursor:default}
+#doc{display:none}
+
+@media print{
+  @page{size:A4;margin:10mm 13mm}
+  html,body{background:#fff !important}
+  body>*{display:none !important}
+  body>#doc{display:block !important}
+  *{-webkit-print-color-adjust:exact !important;print-color-adjust:exact !important}
+}
+#doc{font-size:9.3pt;color:#1A2337;line-height:1.52}
+#doc .dh{border-bottom:2.2px solid var(--navy);padding-bottom:6px;margin-bottom:3px;
+  display:flex;justify-content:space-between;align-items:flex-end;gap:16px}
+#doc .dh h1{font-size:13.5pt;font-weight:800;letter-spacing:-.5px;color:var(--navy);line-height:1.25}
+#doc .dh .org{font-size:8.6pt;color:#5A647A;text-align:right;line-height:1.6;white-space:nowrap}
+#doc .dh .org b{color:var(--navy);font-size:9.4pt}
+#doc .meta{display:flex;gap:0;border:1px solid #D4D9E3;border-top:none;margin-bottom:8px;font-size:8.2pt}
+#doc .meta div{flex:1;padding:3.5px 8px;border-right:1px solid #D4D9E3}
+#doc .meta div:last-child{border-right:none}
+#doc .meta span{display:block;color:#78808F;font-size:7.6pt;margin-bottom:1px}
+#doc .meta b{font-weight:600}
+#doc h2{font-size:9.8pt;font-weight:700;color:var(--navy);margin:0 0 5px;padding-left:8px;
+  border-left:3px solid var(--gold);line-height:1.3}
+#doc section{margin-bottom:7px;page-break-inside:avoid}
+#doc table{width:100%;border-collapse:collapse;font-size:8.5pt}
+#doc th,#doc td{border:1px solid #D4D9E3;padding:3px 7px;text-align:left;vertical-align:top}
+#doc th{background:#F2F4F8;font-weight:600;color:#3A4459;font-size:8.1pt;white-space:nowrap}
+#doc td.n{text-align:right;font-variant-numeric:tabular-nums}
+#doc td.c{text-align:center;white-space:nowrap}
+#doc .lead{background:#F7F9FC;border:1px solid #DDE3EC;border-left:3px solid var(--navy);
+  padding:6px 10px;font-size:9.2pt;font-weight:600;line-height:1.55}
+#doc .lead em{font-style:normal;color:#9A6508;font-weight:700}
+#doc ol.k{padding-left:17px;font-size:8.7pt;line-height:1.6}
+#doc ol.k li{margin-bottom:1px}
+#doc .risk{border:1px solid #E3BDBD;background:#FCF3F3;padding:7px 11px;font-size:8.7pt;line-height:1.6}
+#doc .risk b{display:block;color:#9A2B2B;font-size:9pt;margin-bottom:1px}
+#doc .decide td.blank{height:22px;background:#FDFDFE}
+#doc .sigrow{display:flex;gap:10px;margin-top:4px}
+#doc .sig{flex:1;border:1px solid #D4D9E3;height:38px;position:relative}
+#doc .sig span{position:absolute;top:5px;left:9px;font-size:7.8pt;color:#78808F}
+#doc .dfoot{margin-top:7px;padding-top:5px;border-top:1px solid #D4D9E3;display:flex;
+  justify-content:space-between;align-items:flex-end;gap:14px;font-size:7.8pt;color:#78808F;line-height:1.6}
+#doc .dfoot b{color:var(--navy);font-size:8.8pt}
+#doc .warnbar{background:#FFF6E2;border:1px solid #EBD6A6;color:#7A5A12;font-size:7.6pt;
+  padding:3.5px 9px;margin-bottom:7px;text-align:center}
 </style>
 </head>
 <body data-palette="#2E5AA8,#BE7B12,#8A4FA8">
@@ -212,6 +263,10 @@ footer{padding:22px 0 40px;font-size:11.5px;color:var(--ink3);text-align:center;
       <div class="out" id="out">
         <div class="ph"><div>왼쪽 버튼을 누르면<br>원문이 임원 브리핑으로 바뀝니다.</div></div>
       </div>
+      <button class="pdfbtn" id="pdf">
+        <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><path d="M8 1.8v8.4M4.6 7l3.4 3.4L11.4 7M2.4 13.4h11.2" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        보고 양식 PDF로 내려받기
+      </button>
     </div>
   </div>
 
@@ -237,6 +292,103 @@ footer{padding:22px 0 40px;font-size:11.5px;color:var(--ink3);text-align:center;
 <footer class="wrap">
   본 페이지의 모든 수치와 보고 내용은 데모용 가상 데이터입니다. · 제작 좋은기분(Feelsogood^^)
 </footer>
+
+
+<!-- ===== 인쇄/PDF 전용 A4 보고 양식 ===== -->
+<div id="doc">
+  <div class="dh">
+    <h1>주간 경영 브리핑<br><span style="font-size:10pt;font-weight:600;color:#3A4459">NOBILIAIRE · 2026년 11월 3주차</span></h1>
+    <div class="org"><b>좋은기분(Feelsogood^^)</b><br>AI 활용 교육 · 바이브코딩<br>imchaehun7@gmail.com</div>
+  </div>
+  <div class="meta">
+    <div><span>작성일</span><b>2026-11-19 (목)</b></div>
+    <div><span>대상 기간</span><b>11.13 ~ 11.19</b></div>
+    <div><span>취합 부서</span><b>5개 부서</b></div>
+    <div><span>원문 분량</span><b>1,420자</b></div>
+    <div><span>문서 구분</span><b>데모 (가상)</b></div>
+  </div>
+
+  <div class="warnbar">본 문서는 교육 제안 검토용 데모입니다. 아래 수치·부서명·보고 내용은 모두 설명을 위한 가상 데이터이며 실제 경영 정보가 아닙니다.</div>
+
+  <section>
+    <h2>1. 한 줄 요약</h2>
+    <div class="lead">매출은 전년 대비 31% 성장하며 순조로우나, <em>외주 업체 일정 지연이 상품기획·디자인 두 부서에 동시에 걸려</em> 12월 출시 일정이 흔들리고 있습니다.</div>
+  </section>
+
+  <section>
+    <h2>2. 핵심 지표</h2>
+    <table>
+      <thead><tr><th style="width:28%">구분</th><th style="width:22%">금주</th><th style="width:22%">전월 대비</th><th>비고</th></tr></thead>
+      <tbody>
+        <tr><td>11월 매출</td><td class="n">19.4 억원</td><td class="n">+31.1%</td><td>전년 동월 14.8억원</td></tr>
+        <tr><td>신규 계약</td><td class="n">24 건</td><td class="n">+6 건</td><td>분기 목표 26건의 92%</td></tr>
+        <tr><td>진행 프로젝트</td><td class="n">17 건</td><td class="n">+1 건</td><td>—</td></tr>
+        <tr><td>결재 평균 소요</td><td class="n">2.1 일</td><td class="n">-0.8 일</td><td>전자결재 양식 7종 간소화 효과</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section>
+    <h2>3. 이번 주 핵심</h2>
+    <ol class="k">
+      <li>신규 계약 6건 체결, 누적 24건으로 분기 목표의 92% 달성</li>
+      <li>내부 결재 소요 2.9일 → 2.1일로 단축 (전자결재 양식 간소화 효과)</li>
+      <li>마케팅 달성률 64%로 전 부서 최저, 예산 소진율은 71%</li>
+    </ol>
+  </section>
+
+  <section>
+    <h2>4. 부서별 목표 달성률</h2>
+    <table>
+      <thead><tr><th style="width:24%">부서</th><th style="width:16%">달성률</th><th>특이사항</th></tr></thead>
+      <tbody>
+        <tr><td>영업본부</td><td class="n">92%</td><td>잔여 2건 12월 첫째 주 클로징 예정</td></tr>
+        <tr><td>운영지원팀</td><td class="n">85%</td><td>12월 채용 2명 최종 면접 일정 조율 중</td></tr>
+        <tr><td>상품기획팀</td><td class="n">78%</td><td>외주 디자인 업체 2주 지연, 출시 일정 재조정 필요</td></tr>
+        <tr><td>디자인팀</td><td class="n">71%</td><td>브랜드 리뉴얼 2차 시안 완료, 인력 1명 충원 시 회복 가능</td></tr>
+        <tr><td>마케팅팀</td><td class="n">64%</td><td><b>전 부서 최저.</b> 예산 소진율 71%, 인플루언서 협업 2건 진행</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section>
+    <h2>5. 결정이 필요한 안건</h2>
+    <table class="decide">
+      <thead><tr><th style="width:5%">No</th><th style="width:22%">안건</th><th>내용</th><th style="width:13%">요청 부서</th><th style="width:16%">결정</th></tr></thead>
+      <tbody>
+        <tr><td class="c">1</td><td>신규 라인 출시 방식</td><td>외주 지연으로 3종 동시 출시 불가. 2종 선출시 + 1종 1월 출시 시 초기 마케팅 비용 약 15% 증가</td><td class="c">상품기획팀</td><td class="blank"></td></tr>
+        <tr><td class="c">2</td><td>마케팅 추가 예산 3천만원</td><td>신규 채널 테스트 목적. 현 달성률 64%로 전 부서 최저인 점 함께 고려 필요</td><td class="c">마케팅팀</td><td class="blank"></td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section>
+    <h2>6. 리스크</h2>
+    <div class="risk"><b>4분기 실적 2.1억원 이탈 가능</b>ㅇㅇ건설 납품 계약이 상대측 내부 결재 지연으로 12월 중순 연기. 4분기 실적 미반영 가능성 있음. — 영업본부</div>
+  </section>
+
+  <section>
+    <h2>7. 부서 보고를 가로질러 본 지점</h2>
+    <ol class="k">
+      <li>상품기획 지연과 디자인 지연은 <b>같은 외주 업체 한 곳</b>에서 비롯됨 — 두 부서가 각각 보고했으나 원인은 하나</li>
+      <li>디자인팀이 요청한 인력 1명 충원이 두 부서 일정을 동시에 회복시킬 수 있음</li>
+    </ol>
+  </section>
+
+  <section>
+    <h2>8. 확인</h2>
+    <div class="sigrow">
+      <div class="sig"><span>담당</span></div>
+      <div class="sig"><span>담당 임원</span></div>
+      <div class="sig"><span>대표이사</span></div>
+    </div>
+  </section>
+
+  <div class="dfoot">
+    <div>원문 1,420자 → 본 양식 1장 · 생성 소요 약 3초<br>사람이 직접 취합·요약 시 통상 20~30분 소요</div>
+    <div style="text-align:right"><b>좋은기분 임채훈</b><br>010-5796-6434 · imchaehun7@gmail.com</div>
+  </div>
+</div>
 
 <script>
 const S1="#2E5AA8", S2="#BE7B12", INK3="#78808F";
@@ -418,6 +570,17 @@ btn.addEventListener("click",()=>{
     }
   };
   next();
+});
+
+/* ---------- PDF ---------- */
+document.getElementById("pdf").addEventListener("click",()=>{
+  const fire=()=>{ setTimeout(()=>window.print(),120); };
+  if(!document.querySelector("#out .blk")){
+    const b=document.getElementById("run");
+    b.click();
+    const wait=setInterval(()=>{ if(document.querySelector("#out .blk")){clearInterval(wait);fire();} },300);
+    setTimeout(()=>clearInterval(wait),8000);
+  } else fire();
 });
 </script>
 </body>

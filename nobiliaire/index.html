@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>NOBILIAIRE 임원 주간 대시보드 — 데모 | 좋은기분</title>
+<meta name="description" content="바이브코딩 교육 제안 검토용 데모 화면. 좋은기분(Feelsogood^^) 제작." />
+<meta name="robots" content="noindex" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#14264A; --navy-soft:#1E3665; --gold:#F3B94D; --gold-deep:#BE7B12;
+  --s1:#2E5AA8; --s2:#BE7B12; --s3:#8A4FA8;
+  --surface:#FCFCFB; --card:#FFFFFF; --line:#E6E8EE;
+  --ink:#14264A; --ink2:#4A5468; --ink3:#78808F;
+  --good:#1F7A4D; --warn:#B8791A; --crit:#B23B3B;
+  --r:14px; --sh:0 1px 2px rgba(20,38,74,.05), 0 8px 24px rgba(20,38,74,.06);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Noto Sans KR',-apple-system,sans-serif;background:var(--surface);color:var(--ink);
+  -webkit-font-smoothing:antialiased;word-break:keep-all;line-height:1.7}
+.wrap{max-width:1180px;margin:0 auto;padding:0 20px}
+
+/* header */
+header{background:var(--navy);color:#fff;padding:20px 0 22px}
+.hd{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:12px}
+.mark{width:40px;height:40px;border-radius:11px;background:linear-gradient(135deg,var(--gold),#E0A233);
+  display:grid;place-items:center;color:var(--navy);font-weight:900;font-size:15px;letter-spacing:-.5px}
+.ttl{font-size:17px;font-weight:700;letter-spacing:-.3px;line-height:1.35}
+.sub{font-size:12.5px;color:#A9B6D1;font-weight:400}
+.badge{font-size:11.5px;font-weight:700;letter-spacing:.3px;padding:6px 11px;border-radius:999px;
+  background:rgba(243,185,77,.16);color:var(--gold);border:1px solid rgba(243,185,77,.35)}
+.hdmeta{text-align:right;font-size:12px;color:#A9B6D1}
+.hdmeta b{display:block;color:#fff;font-size:13.5px;font-weight:600}
+
+/* notice */
+.notice{background:#FFF8E8;border-bottom:1px solid #F0DFB4;padding:11px 0;font-size:13px;color:#7A5A12}
+.notice .wrap{display:flex;gap:9px;align-items:flex-start}
+.notice svg{flex:0 0 auto;margin-top:3px}
+
+main{padding:28px 0 56px}
+.sechd{display:flex;align-items:baseline;gap:10px;margin:0 0 14px}
+.sechd h2{font-size:16px;font-weight:700;letter-spacing:-.3px}
+.sechd span{font-size:12.5px;color:var(--ink3)}
+
+/* kpi */
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:30px}
+.kpi{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:17px 18px 15px;box-shadow:var(--sh)}
+.kpi .lab{font-size:12.5px;color:var(--ink3);font-weight:500;margin-bottom:7px}
+.kpi .val{font-size:27px;font-weight:800;letter-spacing:-1px;line-height:1.1}
+.kpi .val small{font-size:14px;font-weight:600;color:var(--ink2);margin-left:2px;letter-spacing:0}
+.kpi .dl{display:inline-flex;align-items:center;gap:4px;margin-top:9px;font-size:12px;font-weight:600;
+  padding:3px 8px;border-radius:999px}
+.up{background:#E8F3ED;color:var(--good)} .dn{background:#FDECEC;color:var(--crit)} .fl{background:#F1F2F5;color:var(--ink2)}
+.spark{margin-top:11px;display:block}
+
+/* cards */
+.grid2{display:grid;grid-template-columns:1.5fr 1fr;gap:16px;margin-bottom:30px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:19px 20px 16px;box-shadow:var(--sh)}
+.cardhd{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:4px}
+.cardhd h3{font-size:14.5px;font-weight:700;letter-spacing:-.2px}
+.cardhd p{font-size:12px;color:var(--ink3);margin-top:2px}
+.tbtn{font:inherit;font-size:11.5px;font-weight:600;color:var(--ink2);background:#F4F5F8;border:1px solid var(--line);
+  border-radius:8px;padding:5px 10px;cursor:pointer;white-space:nowrap}
+.tbtn:hover{background:#EAECF1}
+.legend{display:flex;gap:16px;margin:10px 0 2px;font-size:12.5px;color:var(--ink2);flex-wrap:wrap}
+.legend i{width:10px;height:10px;border-radius:3px;display:inline-block;margin-right:6px;vertical-align:-1px}
+.chartbox{position:relative}
+svg.chart{width:100%;height:auto;display:block;overflow:visible}
+.gl{stroke:#EEF0F4;stroke-width:1}
+.axt{font-size:11px;fill:var(--ink3);font-family:'Noto Sans KR',sans-serif}
+.dlab{font-size:11.5px;font-weight:700;font-family:'Noto Sans KR',sans-serif}
+.tip{position:absolute;pointer-events:none;background:var(--navy);color:#fff;border-radius:9px;padding:9px 11px;
+  font-size:12px;line-height:1.55;box-shadow:0 6px 20px rgba(20,38,74,.25);opacity:0;transition:opacity .12s;z-index:5;white-space:nowrap}
+.tip b{font-weight:700;font-size:12.5px;display:block;margin-bottom:3px;color:var(--gold)}
+.tip .row{display:flex;align-items:center;gap:7px}
+.tip .row i{width:8px;height:8px;border-radius:2px;display:inline-block}
+.tip .row span{margin-left:auto;font-weight:700;padding-left:14px}
+table.dt{width:100%;border-collapse:collapse;font-size:12.5px;margin-top:12px}
+table.dt th,table.dt td{text-align:right;padding:6px 8px;border-bottom:1px solid var(--line)}
+table.dt th:first-child,table.dt td:first-child{text-align:left}
+table.dt th{color:var(--ink3);font-weight:600;font-size:11.5px}
+[hidden]{display:none !important}
+
+/* report */
+.rep{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.pane{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:19px 20px;box-shadow:var(--sh);
+  display:flex;flex-direction:column}
+.panehd{font-size:13px;font-weight:700;color:var(--ink2);margin-bottom:11px;display:flex;align-items:center;gap:8px}
+.panehd .n{width:20px;height:20px;border-radius:6px;background:var(--navy);color:#fff;font-size:11px;font-weight:700;
+  display:grid;place-items:center}
+.raw{font-size:12.3px;line-height:1.85;color:var(--ink2);background:#F7F8FA;border:1px solid var(--line);
+  border-radius:10px;padding:14px;flex:1;min-height:300px;overflow-y:auto;white-space:pre-wrap}
+.raw b{color:var(--ink);font-weight:600}
+.runbtn{margin-top:13px;width:100%;font:inherit;font-size:14px;font-weight:700;color:var(--navy);
+  background:linear-gradient(135deg,var(--gold),#E8AB36);border:none;border-radius:10px;padding:13px;cursor:pointer;
+  box-shadow:0 2px 8px rgba(243,185,77,.4);transition:transform .1s}
+.runbtn:hover{transform:translateY(-1px)} .runbtn:active{transform:translateY(0)}
+.runbtn:disabled{opacity:.55;cursor:default;transform:none}
+.out{min-height:300px;font-size:13px;line-height:1.8}
+.ph{min-height:300px;display:grid;place-items:center;text-align:center;color:var(--ink3);font-size:12.5px}
+.ph div{max-width:220px}
+.step{font-size:12.5px;color:var(--ink3);padding:5px 0;display:flex;gap:8px;align-items:center}
+.step.done{color:var(--good);font-weight:500}
+.blk{margin-bottom:15px}
+.blk h4{font-size:12px;font-weight:700;color:var(--ink3);letter-spacing:.4px;margin-bottom:7px}
+.blk ul{list-style:none;display:flex;flex-direction:column;gap:7px}
+.blk li{position:relative;padding-left:16px;font-size:12.8px;color:var(--ink2);line-height:1.7}
+.blk li::before{content:"";position:absolute;left:3px;top:9px;width:5px;height:5px;border-radius:50%;background:var(--s1)}
+.flag{border-left:3px solid var(--warn);background:#FFF8E8;border-radius:0 9px 9px 0;padding:10px 13px;font-size:12.8px;color:#6E5411}
+.flag.c{border-left-color:var(--crit);background:#FDF0F0;color:#8A2F2F}
+.flag b{display:block;font-size:11.5px;letter-spacing:.3px;margin-bottom:3px;font-weight:700}
+.tick{font-size:11.5px;color:var(--ink3);margin-top:10px;padding-top:10px;border-top:1px dashed var(--line)}
+
+/* footer */
+.fcta{margin-top:34px;background:var(--navy);border-radius:18px;padding:30px 32px;color:#fff}
+.fcta h3{font-size:19px;font-weight:800;letter-spacing:-.5px;margin-bottom:10px}
+.fcta p{font-size:13.5px;color:#BAC6DD;line-height:1.85;max-width:720px}
+.fcta p+p{margin-top:9px}
+.fl2{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.chip{font-size:12px;font-weight:600;padding:7px 13px;border-radius:999px;background:rgba(255,255,255,.08);
+  border:1px solid rgba(255,255,255,.16);color:#DCE4F2}
+.sign{margin-top:22px;padding-top:18px;border-top:1px solid rgba(255,255,255,.14);display:flex;
+  justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap}
+.sign .who{font-size:14px;font-weight:700} .sign .who span{color:var(--gold)}
+.sign .ct{font-size:12.5px;color:#A9B6D1;text-align:right;line-height:1.75}
+footer{padding:22px 0 40px;font-size:11.5px;color:var(--ink3);text-align:center;line-height:1.8}
+
+@media(max-width:900px){
+  .kpis{grid-template-columns:repeat(2,1fr)}
+  .grid2,.rep{grid-template-columns:1fr}
+  .raw{min-height:240px}
+}
+@media(max-width:560px){
+  .kpis{grid-template-columns:1fr 1fr;gap:10px}
+  .kpi .val{font-size:22px}
+  .hdmeta{text-align:left}
+  .fcta{padding:24px 20px}
+}
+</style>
+</head>
+<body data-palette="#2E5AA8,#BE7B12,#8A4FA8">
+
+<header>
+  <div class="wrap hd">
+    <div class="brand">
+      <div class="mark">^^</div>
+      <div>
+        <div class="ttl">NOBILIAIRE 임원 주간 대시보드</div>
+        <div class="sub">좋은기분(Feelsogood^^) 제작 · 바이브코딩 교육 제안 검토용</div>
+      </div>
+    </div>
+    <div style="display:flex;align-items:center;gap:14px">
+      <span class="badge">DEMO</span>
+      <div class="hdmeta"><b>2026년 11월 3주차</b>11월 19일 (목) 기준</div>
+    </div>
+  </div>
+</header>
+
+<div class="notice"><div class="wrap">
+  <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" stroke="#B8860B" stroke-width="1.5"/><path d="M8 4.5v4M8 11h.01" stroke="#B8860B" stroke-width="1.6" stroke-linecap="round"/></svg>
+  <div><b>이 화면은 제안 검토용 데모입니다.</b> 표시된 회사 수치·부서명·보고 내용은 모두 설명을 위해 임의로 만든 가상 데이터이며, 실제 NOBILIAIRE의 경영 정보가 아닙니다.</div>
+</div></div>
+
+<main class="wrap">
+
+  <div class="sechd"><h2>핵심 지표</h2><span>전월 대비 · 가상 데이터</span></div>
+  <div class="kpis" id="kpis"></div>
+
+  <div class="grid2">
+    <div class="card">
+      <div class="cardhd">
+        <div><h3>월별 매출 추이</h3><p>단위: 억원 · 올해와 전년 동월 비교</p></div>
+        <button class="tbtn" data-table="t1">표로 보기</button>
+      </div>
+      <div class="legend">
+        <span><i style="background:#2E5AA8"></i>2026년</span>
+        <span><i style="background:#BE7B12"></i>2025년</span>
+      </div>
+      <div class="chartbox">
+        <svg class="chart" id="lineC" viewBox="0 0 720 300" role="img" aria-label="월별 매출 추이 꺾은선 그래프"></svg>
+        <div class="tip" id="tip1"></div>
+      </div>
+      <div id="t1" hidden></div>
+    </div>
+
+    <div class="card">
+      <div class="cardhd">
+        <div><h3>부서별 분기 목표 달성률</h3><p>단위: % · 4분기 누적</p></div>
+        <button class="tbtn" data-table="t2">표로 보기</button>
+      </div>
+      <div class="chartbox" style="margin-top:12px">
+        <svg class="chart" id="barC" viewBox="0 0 400 280" role="img" aria-label="부서별 목표 달성률 막대 그래프"></svg>
+        <div class="tip" id="tip2"></div>
+      </div>
+      <div id="t2" hidden></div>
+    </div>
+  </div>
+
+  <div class="sechd"><h2>주간보고 자동 요약</h2><span>5개 부서 보고서 → 임원용 1분 브리핑</span></div>
+  <div class="rep">
+    <div class="pane">
+      <div class="panehd"><span class="n">1</span>각 부서가 올린 주간보고 원문 <span style="margin-left:auto;font-weight:500;color:var(--ink3)">1,420자</span></div>
+      <div class="raw" id="raw"></div>
+      <button class="runbtn" id="run">AI 요약 실행</button>
+    </div>
+    <div class="pane">
+      <div class="panehd"><span class="n">2</span>임원용 브리핑 <span style="margin-left:auto;font-weight:500;color:var(--ink3)" id="timer"></span></div>
+      <div class="out" id="out">
+        <div class="ph"><div>왼쪽 버튼을 누르면<br>원문이 임원 브리핑으로 바뀝니다.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="fcta">
+    <h3>이 화면은 커리큘럼 B블록의 실제 결과물입니다</h3>
+    <p>제안서에 적은 <b style="color:#fff">"임원이 직접 업무 도구를 만든다"</b>가 글로만 남지 않도록, 4시간 블록 하나에서 나오는 산출물을 먼저 만들어 보냈습니다. 화면 설계부터 차트, 요약 로직까지 코드를 한 줄도 직접 타이핑하지 않고 AI와의 대화만으로 제작했습니다.</p>
+    <p>교육 당일에는 임원 여섯 분이 각자 본인 업무 하나를 가지고 와서, 이와 같은 수준의 결과물을 본인 손으로 완성해 가져가시게 됩니다.</p>
+    <div class="fl2">
+      <span class="chip">A · AI 업무 진단과 도구 선택</span>
+      <span class="chip">B · 업무 대시보드 제작 ← 이 화면</span>
+      <span class="chip">C · 문서·보고 자동화</span>
+      <span class="chip">D · 데이터 정리와 분석</span>
+      <span class="chip">E · 팀 단위 확산 설계</span>
+      <span class="chip">F · 각자 과제 완성과 리뷰</span>
+    </div>
+    <div class="sign">
+      <div class="who">좋은기분 <span>임채훈</span></div>
+      <div class="ct">AI 활용 교육 · 바이브코딩<br>imchaehun7@gmail.com · 010-5796-6434</div>
+    </div>
+  </div>
+</main>
+
+<footer class="wrap">
+  본 페이지의 모든 수치와 보고 내용은 데모용 가상 데이터입니다. · 제작 좋은기분(Feelsogood^^)
+</footer>
+
+<script>
+const S1="#2E5AA8", S2="#BE7B12", INK3="#78808F";
+const M=["1월","2월","3월","4월","5월","6월","7월","8월","9월","10월","11월"];
+const Y26=[12.4,11.8,14.2,13.6,15.1,16.4,15.8,14.9,17.2,18.6,19.4];
+const Y25=[10.1,9.8,11.4,11.0,12.2,12.9,12.1,11.7,13.4,14.0,14.8];
+const DEPT=[["영업본부",92],["운영지원",85],["상품기획",78],["디자인",71],["마케팅",64]];
+
+/* ---------- KPI ---------- */
+const KPI=[
+ {l:"11월 매출",v:"19.4",u:"억원",d:"+31.1%",c:"up",s:Y26.slice(-7)},
+ {l:"신규 계약",v:"24",u:"건",d:"+6건",c:"up",s:[14,16,15,19,18,21,24]},
+ {l:"진행 프로젝트",v:"17",u:"건",d:"+1건",c:"up",s:[13,14,14,15,16,16,17]},
+ {l:"결재 평균 소요",v:"2.1",u:"일",d:"-0.8일",c:"up",s:[3.4,3.2,3.1,2.9,2.6,2.4,2.1]}
+];
+document.getElementById("kpis").innerHTML=KPI.map(k=>{
+  const mn=Math.min(...k.s),mx=Math.max(...k.s),r=(mx-mn)||1;
+  const pts=k.s.map((v,i)=>`${6+i*(108/(k.s.length-1))},${30-((v-mn)/r)*22-4}`).join(" ");
+  return `<div class="kpi"><div class="lab">${k.l}</div>
+    <div class="val">${k.v}<small>${k.u}</small></div>
+    <span class="dl ${k.c}">${k.d}</span>
+    <svg class="spark" width="120" height="34" viewBox="0 0 120 34" aria-hidden="true">
+      <polyline points="${pts}" fill="none" stroke="${S1}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity=".85"/>
+    </svg></div>`;
+}).join("");
+
+/* ---------- line chart ---------- */
+(function(){
+  const sv=document.getElementById("lineC"),tip=document.getElementById("tip1");
+  const W=720,H=300,L=46,R=30,T=18,B=38;
+  const iw=W-L-R, ih=H-T-B;
+  const all=[...Y26,...Y25], lo=Math.floor(Math.min(...all)-2), hi=Math.ceil(Math.max(...all)+1);
+  const X=i=>L+i*(iw/(M.length-1)), Y=v=>T+ih-((v-lo)/(hi-lo))*ih;
+  let g="";
+  for(let t=lo;t<=hi;t+=2){ g+=`<line class="gl" x1="${L}" y1="${Y(t)}" x2="${W-R}" y2="${Y(t)}"/>
+    <text class="axt" x="${L-10}" y="${Y(t)+4}" text-anchor="end">${t}</text>`; }
+  M.forEach((m,i)=>{ g+=`<text class="axt" x="${X(i)}" y="${H-14}" text-anchor="middle">${m}</text>`; });
+  const path=d=>d.map((v,i)=>`${i?"L":"M"}${X(i)},${Y(v)}`).join(" ");
+  const area=`${path(Y26)} L${X(M.length-1)},${T+ih} L${X(0)},${T+ih} Z`;
+  g+=`<path d="${area}" fill="${S1}" opacity=".07"/>`;
+  g+=`<path d="${path(Y25)}" fill="none" stroke="${S2}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="5 4"/>`;
+  g+=`<path d="${path(Y26)}" fill="none" stroke="${S1}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>`;
+  const li=M.length-1;
+  g+=`<circle cx="${X(li)}" cy="${Y(Y26[li])}" r="4.5" fill="${S1}" stroke="#fff" stroke-width="2"/>
+      <text class="dlab" x="${X(li)}" y="${Y(Y26[li])-13}" text-anchor="end" fill="${S1}">19.4</text>
+      <circle cx="${X(li)}" cy="${Y(Y25[li])}" r="4" fill="${S2}" stroke="#fff" stroke-width="2"/>
+      <text class="dlab" x="${X(li)}" y="${Y(Y25[li])+20}" text-anchor="end" fill="${S2}">14.8</text>`;
+  g+=`<line id="cross" x1="0" y1="${T}" x2="0" y2="${T+ih}" stroke="${INK3}" stroke-width="1" stroke-dasharray="3 3" opacity="0"/>
+      <circle id="h1" r="5" fill="${S1}" stroke="#fff" stroke-width="2" opacity="0"/>
+      <circle id="h2" r="5" fill="${S2}" stroke="#fff" stroke-width="2" opacity="0"/>
+      <rect x="0" y="0" width="${W}" height="${H}" fill="transparent" id="hit"/>`;
+  sv.innerHTML=g;
+  const cr=sv.querySelector("#cross"),h1=sv.querySelector("#h1"),h2=sv.querySelector("#h2");
+  sv.addEventListener("mousemove",e=>{
+    const b=sv.getBoundingClientRect(), px=(e.clientX-b.left)*(W/b.width);
+    let i=Math.round((px-L)/(iw/(M.length-1))); i=Math.max(0,Math.min(M.length-1,i));
+    cr.setAttribute("x1",X(i));cr.setAttribute("x2",X(i));cr.setAttribute("opacity","1");
+    h1.setAttribute("cx",X(i));h1.setAttribute("cy",Y(Y26[i]));h1.setAttribute("opacity","1");
+    h2.setAttribute("cx",X(i));h2.setAttribute("cy",Y(Y25[i]));h2.setAttribute("opacity","1");
+    const dp=(((Y26[i]-Y25[i])/Y25[i])*100).toFixed(1);
+    tip.innerHTML=`<b>${M[i]}</b>
+      <div class="row"><i style="background:${S1}"></i>2026<span>${Y26[i].toFixed(1)}억</span></div>
+      <div class="row"><i style="background:${S2}"></i>2025<span>${Y25[i].toFixed(1)}억</span></div>
+      <div class="row" style="margin-top:4px;color:#8FE3B0"><span style="padding:0">전년 대비 +${dp}%</span></div>`;
+    const lx=X(i)*(b.width/W);
+    tip.style.left=Math.min(Math.max(lx-60,0),b.width-170)+"px";
+    tip.style.top="6px"; tip.style.opacity="1";
+  });
+  sv.addEventListener("mouseleave",()=>{tip.style.opacity="0";cr.setAttribute("opacity","0");
+    h1.setAttribute("opacity","0");h2.setAttribute("opacity","0");});
+  document.getElementById("t1").innerHTML=`<table class="dt"><thead><tr><th>월</th><th>2026</th><th>2025</th><th>증감</th></tr></thead><tbody>`+
+    M.map((m,i)=>`<tr><td>${m}</td><td>${Y26[i].toFixed(1)}</td><td>${Y25[i].toFixed(1)}</td><td>+${(((Y26[i]-Y25[i])/Y25[i])*100).toFixed(1)}%</td></tr>`).join("")+`</tbody></table>`;
+})();
+
+/* ---------- bar chart ---------- */
+(function(){
+  const sv=document.getElementById("barC"),tip=document.getElementById("tip2");
+  const W=400,H=280,L=78,R=44,T=6,BH=30,GAP=22;
+  const iw=W-L-R;
+  let g="";
+  [0,25,50,75,100].forEach(t=>{ g+=`<line class="gl" x1="${L+iw*t/100}" y1="${T}" x2="${L+iw*t/100}" y2="${T+DEPT.length*(BH+GAP)-GAP+6}"/>`; });
+  DEPT.forEach((d,i)=>{
+    const y=T+i*(BH+GAP), w=iw*d[1]/100;
+    const low = d[1] < 70;
+    g+=`<text class="axt" x="${L-12}" y="${y+BH/2+4}" text-anchor="end" style="font-size:12px;fill:#4A5468;font-weight:500">${d[0]}</text>
+        <rect x="${L}" y="${y}" width="${iw}" height="${BH}" rx="6" fill="#F2F3F7"/>
+        <rect class="bar" data-i="${i}" x="${L}" y="${y}" width="${w}" height="${BH}" rx="6" fill="${S1}"/>
+        <text class="dlab" x="${L+w+10}" y="${y+BH/2+4}" fill="#4A5468">${d[1]}%</text>`;
+    if(low) g+=`<g transform="translate(${L+8},${y+BH/2})">
+        <rect x="0" y="-9" width="52" height="18" rx="9" fill="#FFF3D6"/>
+        <text x="26" y="4" text-anchor="middle" style="font-size:10.5px;font-weight:700;fill:#8A5A08;font-family:'Noto Sans KR',sans-serif">! 최저</text></g>`;
+  });
+  sv.setAttribute("viewBox",`0 0 ${W} ${T+DEPT.length*(BH+GAP)}`);
+  sv.innerHTML=g;
+  sv.querySelectorAll(".bar").forEach(b=>{
+    b.style.cursor="pointer";
+    b.addEventListener("mouseenter",e=>{
+      const i=+b.dataset.i, r=sv.getBoundingClientRect(), br=b.getBoundingClientRect();
+      tip.innerHTML=`<b>${DEPT[i][0]}</b><div class="row">목표 달성률<span>${DEPT[i][1]}%</span></div>
+        <div class="row">잔여<span>${100-DEPT[i][1]}%p</span></div>`;
+      tip.style.left=Math.min(br.right-r.left+8, r.width-150)+"px";
+      tip.style.top=(br.top-r.top-6)+"px"; tip.style.opacity="1";
+      b.setAttribute("opacity",".82");
+    });
+    b.addEventListener("mouseleave",()=>{tip.style.opacity="0";b.setAttribute("opacity","1");});
+  });
+  document.getElementById("t2").innerHTML=`<table class="dt"><thead><tr><th>부서</th><th>달성률</th></tr></thead><tbody>`+
+    DEPT.map(d=>`<tr><td>${d[0]}</td><td>${d[1]}%</td></tr>`).join("")+`</tbody></table>`;
+})();
+
+/* ---------- table toggles ---------- */
+document.querySelectorAll(".tbtn").forEach(b=>b.addEventListener("click",()=>{
+  const t=document.getElementById(b.dataset.table), on=t.hidden;
+  t.hidden=!on; b.textContent=on?"표 닫기":"표로 보기";
+}));
+
+/* ---------- report summarizer ---------- */
+const RAW=`[영업본부] 11월 3주차 주간보고
+금주 신규 계약 6건 체결, 누적 24건으로 분기 목표 26건의 92% 달성. 강남권 신규 거래처 2곳 계약 완료했으며 잔여 2건은 12월 첫째 주 클로징 예정. 다만 11월 말 예정이던 ㅇㅇ건설 납품 계약이 상대측 내부 결재 지연으로 12월 중순으로 밀렸습니다. 금액 기준 약 2.1억 규모이며 4분기 실적에 반영되지 않을 가능성이 있어 보고드립니다.
+
+[상품기획팀] 11월 3주차 주간보고
+신규 라인 3종 기획안 1차 완료, 원가 검토 진행 중입니다. 목표 대비 78% 수준. 외주 디자인 업체 일정이 2주 지연되어 12월 출시 일정 재조정이 필요합니다. 대안으로 2종 선출시 후 1종 1월 출시하는 방안을 검토 중이며, 이 경우 초기 마케팅 비용이 약 15% 증가합니다. 의사결정 필요합니다.
+
+[마케팅팀] 11월 3주차 주간보고
+온라인 광고 집행 효율이 전월 대비 개선되었으나 목표 달성률은 64%로 전 부서 중 가장 낮습니다. 11월 예산 소진율 71%. 인플루언서 협업 2건 진행 중이며 12월 초 콘텐츠 노출 예정. 신규 채널 테스트 예산 3천만원 추가 집행 승인을 요청드립니다.
+
+[운영지원팀] 11월 3주차 주간보고
+내부 결재 소요시간 평균 2.1일로 전월 2.9일 대비 0.8일 단축되었습니다. 전자결재 양식 7종 간소화 효과로 판단됩니다. 85% 달성. 12월 채용 2명 진행 중, 최종 면접 일정 조율 중입니다.
+
+[디자인팀] 11월 3주차 주간보고
+브랜드 리뉴얼 2차 시안 완료, 71% 진행. 외부 업체 일정 지연으로 상품기획팀과 연동된 작업이 함께 밀리고 있습니다. 내부 인력 1명 충원 시 일정 회복 가능하다고 판단됩니다.`;
+
+document.getElementById("raw").textContent=RAW;
+
+const RESULT=`
+<div class="blk"><h4>한 줄 요약</h4>
+<div style="font-size:14px;font-weight:600;color:var(--ink);line-height:1.75">
+매출은 전년 대비 31% 성장하며 순조로우나, <b style="color:#B8791A">외주 업체 일정 지연이 상품기획·디자인 두 부서에 동시에 걸려</b> 12월 출시 일정이 흔들리고 있습니다.</div></div>
+
+<div class="blk"><h4>이번 주 핵심 3가지</h4><ul>
+<li>신규 계약 6건 체결, 누적 24건으로 분기 목표의 92% 달성</li>
+<li>내부 결재 소요 2.9일 → 2.1일로 단축 (전자결재 양식 간소화 효과)</li>
+<li>마케팅 달성률 64%로 전 부서 최저, 예산 소진율은 71%</li>
+</ul></div>
+
+<div class="blk"><h4>대표님 결정이 필요한 안건</h4>
+<div class="flag"><b>1. 신규 라인 출시 방식</b>외주 지연으로 3종 동시 출시 불가. 2종 선출시 + 1종 1월 출시 시 초기 마케팅 비용 약 15% 증가. — 상품기획팀</div>
+<div class="flag" style="margin-top:8px"><b>2. 마케팅 추가 예산 3천만원</b>신규 채널 테스트 목적. 현 달성률 64%로 전 부서 최저인 점 함께 고려 필요. — 마케팅팀</div></div>
+
+<div class="blk"><h4>놓치면 안 되는 리스크</h4>
+<div class="flag c"><b>4분기 실적 2.1억 이탈 가능</b>ㅇㅇ건설 납품 계약이 상대측 결재 지연으로 12월 중순으로 연기. 4분기 미반영 가능성 있음.</div></div>
+
+<div class="blk"><h4>연결해서 볼 지점</h4><ul>
+<li>상품기획 지연과 디자인 지연은 <b>같은 외주 업체 한 곳</b>에서 비롯됨 — 두 부서가 각각 보고했으나 원인은 하나</li>
+<li>디자인팀이 요청한 인력 1명 충원이 두 부서 일정을 동시에 회복시킬 수 있음</li>
+</ul></div>
+
+<div class="tick">원문 1,420자 → 브리핑 읽는 데 약 50초 · 사람이 직접 하면 20~30분</div>`;
+
+const STEPS=["5개 부서 보고서 수집","중복·형식 문장 제거","결정 안건과 리스크 분류","부서 간 연결고리 탐지","임원용 문장으로 재작성"];
+const out=document.getElementById("out"), btn=document.getElementById("run"), timer=document.getElementById("timer");
+btn.addEventListener("click",()=>{
+  btn.disabled=true; btn.textContent="처리 중…"; out.innerHTML=""; timer.textContent="";
+  const t0=Date.now(); let i=0;
+  const next=()=>{
+    if(i<STEPS.length){
+      const d=document.createElement("div");
+      d.className="step"; d.innerHTML=`<svg width="13" height="13" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6.5" stroke="currentColor" stroke-width="1.5" opacity=".4"/></svg>${STEPS[i]}`;
+      out.appendChild(d);
+      setTimeout(()=>{d.classList.add("done");
+        d.innerHTML=`<svg width="13" height="13" viewBox="0 0 16 16" fill="none"><path d="M3 8.5l3.2 3.2L13 5" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"/></svg>${STEPS[i]}`;},330);
+      i++; setTimeout(next,430);
+    } else {
+      setTimeout(()=>{
+        out.innerHTML=RESULT;
+        timer.textContent=((Date.now()-t0)/1000).toFixed(1)+"초";
+        btn.textContent="다시 실행"; btn.disabled=false;
+      },420);
+    }
+  };
+  next();
+});
+</script>
+</body>
+</html>
